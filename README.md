@@ -1,12 +1,12 @@
 # Motivation
 
-Many academic and governmental organizations have mandates to share data with one another. However, most internal networks are not designed for easy sharing with external partners. The common resulting pattern of having a DMZ, or set of machines designated as Data Transfer Nodes, provides a solution to that mandate.  This repository provides the policy configuration to implement a data transfer node using either synchronous or asynchronous data retention by leveraging Policy Composition using an existing body of [Policy Engines](https://github.com/jasoncoposky/irods_rule_engine_plugins_policy)
+Many academic and governmental organizations have mandates to share data with one another. However, most internal networks are not designed for easy sharing with external partners. The common resulting pattern of having a DMZ, or set of machines designated as Data Transfer Nodes, provides a solution to that mandate.  This repository provides the policy configuration to implement a data transfer node using either synchronous or asynchronous data retention by leveraging Policy Composition using an existing body of [Policy Engines](https://github.com/jasoncoposky/irods_rule_engine_plugins_policy).
 
 ![One Pager Explanation](https://irods.org/images/pattern_data_transfer_nodes.png)
 
 # Synchronous Data Transfer Node
 
-The configuration of this DTN is designed to synchrnously replicate data from the edge to a destination resource configured in the 'source_to_destination_map'.  This map can be configured to replicate data from any given source resource to a list of destination resources.  Should more than one source resource be configured a new key-value entry may be added.  This configuration also provides synchronous data retention after the replication.  The source resource is specified as the condition for the data retention after the replication has been performed.
+The configuration of this DTN is designed to synchronously replicate data from the edge to a destination resource configured in the 'source_to_destination_map'.  This map can be configured to replicate data from any given source resource to a list of destination resources.  Should more than one source resource be configured a new key-value entry may be added.  This configuration also provides synchronous data retention after the replication.  The source resource is specified as the condition for the data retention after the replication has been performed.
 
 ```json
     "rule_engines": [
@@ -81,7 +81,7 @@ The configuration of this DTN is designed to synchrnously replicate data from th
 
 # Asynchronous Data Transfer Node
 
-The configuration of this DTN is similar to the synchrnous example except that this configuration relies on asynchronous data retention.  Data retention is configured as a delayed execution rule that queries for data with an access time of greater than a given age in seconds.
+The configuration of this DTN is similar to the synchronous example except that this configuration relies on asynchronous data retention.  Data retention is configured as a delayed execution rule that queries for data with an access time of greater than a given age in seconds.
 
 ```json
     "rule_engines": [
@@ -156,9 +156,9 @@ The configuration of this DTN is similar to the synchrnous example except that t
         ]
 ```
 
-##Rule for Async Data Rentention
+## Rule for Async Data Retention
 
-This policy composed delayed execution rule is configured to execute a data rention policy for data residing on a given resource which is older than 600 seconds.  This asynchrnous rule provides the cache management of Data Transfer Nodes at the edge once data has not been accessed for a sufficient amount of time.
+This policy composed delayed execution rule is configured to execute a data retention policy for data residing on a given resource which is older than 600 seconds.  This asynchronous rule provides the cache management of Data Transfer Nodes at the edge once data has not been accessed for a sufficient amount of time.
 
 ```json
 {
