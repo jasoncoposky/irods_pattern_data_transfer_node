@@ -44,7 +44,7 @@ def event_handler_configured(arg=None):
                             },
                             "active_policy_clauses" : ["post"],
                             "events" : ["put", "get"],
-                            "policy"    : "irods_policy_access_time",
+                            "policy_to_invoke"    : "irods_policy_access_time",
                             "configuration" : {
                                 "source_to_destination_map" : {
                                     "demoResc" : ["AnotherResc"]
@@ -57,7 +57,7 @@ def event_handler_configured(arg=None):
                             },
                             "active_policy_clauses" : ["post"],
                             "events" : ["put"],
-                            "policy"    : "irods_policy_data_replication",
+                            "policy_to_invoke"    : "irods_policy_data_replication",
                             "configuration" : {
                                 "source_to_destination_map" : {
                                     "demoResc" : ["AnotherResc"]
@@ -70,7 +70,7 @@ def event_handler_configured(arg=None):
                             },
                             "active_policy_clauses" : ["pre"],
                             "events" : ["get"],
-                            "policy"    : "irods_policy_data_replication",
+                            "policy_to_invoke"    : "irods_policy_data_replication",
                             "configuration" : {
                                 "source_to_destination_map" : {
                                     "AnotherResc" : ["demoResc"]

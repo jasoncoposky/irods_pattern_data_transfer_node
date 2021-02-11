@@ -44,7 +44,7 @@ def event_handler_configured(arg=None):
                             },
                             "active_policy_clauses" : ["post"],
                             "events" : ["put"],
-                            "policy"    : "irods_policy_data_replication",
+                            "policy_to_invoke"    : "irods_policy_data_replication",
                             "configuration" : {
                                 "source_to_destination_map" : {
                                     "demoResc" : ["AnotherResc"]
@@ -58,8 +58,9 @@ def event_handler_configured(arg=None):
                             },
                             "active_policy_clauses" : ["post"],
                             "events" : ["replication"],
-                            "policy"    : "irods_policy_data_retention",
+                            "policy_to_invoke"    : "irods_policy_data_retention",
                             "configuration" : {
+                                "mode" : "trim_single_replica"
                             }
                         },
                         {
@@ -68,7 +69,7 @@ def event_handler_configured(arg=None):
                             },
                             "active_policy_clauses" : ["pre"],
                             "events" : ["get"],
-                            "policy"    : "irods_policy_data_replication",
+                            "policy_to_invoke"    : "irods_policy_data_replication",
                             "configuration" : {
                                 "source_to_destination_map" : {
                                     "AnotherResc" : ["demoResc"]
@@ -84,16 +85,6 @@ def event_handler_configured(arg=None):
            {
                 "instance_name": "irods_rule_engine_plugin-policy_engine-data_replication-instance",
                 "plugin_name": "irods_rule_engine_plugin-policy_engine-data_replication",
-                "plugin_specific_configuration": {
-                    "log_errors" : "true"
-                }
-           }
-        )
-
-        irods_config.server_config['plugin_configuration']['rule_engines'].insert(0,
-           {
-                "instance_name": "irods_rule_engine_plugin-policy_engine-data_retention-instance",
-                "plugin_name": "irods_rule_engine_plugin-policy_engine-data_retention",
                 "plugin_specific_configuration": {
                     "log_errors" : "true"
                 }
@@ -133,7 +124,7 @@ class TestPolicyConfigurationDTN(ResourceBase, unittest.TestCase):
                 try:
                     filename = 'test_put_file'
                     lib.create_local_testfile(filename)
-                    admin_session.assert_icommand('iput ' + filename)
+                    admin_session.assert_icommand('iput ' + filename, 'STDOUT_SINGLELINE', 'deprecated.')
                     admin_session.assert_icommand('ils -l ' + filename, 'STDOUT_SINGLELINE', 'AnotherResc')
                 finally:
                     admin_session.assert_icommand('irm -f ' + filename)
@@ -145,7 +136,7 @@ class TestPolicyConfigurationDTN(ResourceBase, unittest.TestCase):
             lib.create_local_testfile(filename)
             with event_handler_configured():
                 try:
-                    admin_session.assert_icommand('iput ' + filename)
+                    admin_session.assert_icommand('iput ' + filename, 'STDOUT_SINGLELINE', 'deprecated.')
                     admin_session.assert_icommand('ils -l ' + filename, 'STDOUT_SINGLELINE', 'AnotherResc')
                     admin_session.assert_icommand('iget -R AnotherResc -f ' + filename)
                     admin_session.assert_icommand('ils -l ' + filename, 'STDOUT_SINGLELINE', 'demoResc')

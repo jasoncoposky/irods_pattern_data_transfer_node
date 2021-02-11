@@ -82,7 +82,7 @@ set(CPACK_RPM_PACKAGE_AUTOPROV 0)
 
 set(CPACK_ARCHIVE_COMPONENT_INSTALL ON)
 
-include(/usr/lib/irods/cmake/irods_policy_engine.cmake)
+include(/usr/lib/irods/cmake/policy_composition_framework_cmake_utilities.cmake)
 
 # CPACK names component package files as "${CPACK_PACKAGE_FILE_NAME}-${COMPONENT_NAME}"
 # CPackDeb TO_UPPERs all the component names when checking the ${CPACK_DEBIAN_<COMPONENT>...} variables
