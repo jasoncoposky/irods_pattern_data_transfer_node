@@ -12,16 +12,16 @@ The configuration of this DTN is designed to synchronously replicate data from t
     "rule_engines": [
         {
             "instance_name": "irods_rule_engine_plugin-event_handler-data_object_modified-instance",
-                "plugin_name": "irods_rule_engine_plugin-event_handler-data_object_modified",
-                "plugin_specific_configuration": {
-                    "policies_to_invoke" : [
+            "plugin_name": "irods_rule_engine_plugin-event_handler-data_object_modified",
+            'plugin_specific_configuration': {
+                "policies_to_invoke" : [
                     {
                         "conditional" : {
                             "logical_path" : "\/tempZone.*"
                         },
                         "active_policy_clauses" : ["post"],
                         "events" : ["put"],
-                        "policy"    : "irods_policy_data_replication",
+                        "policy_to_invoke"    : "irods_policy_data_replication",
                         "configuration" : {
                             "source_to_destination_map" : {
                                 "demoResc" : ["AnotherResc"]
@@ -35,8 +35,9 @@ The configuration of this DTN is designed to synchronously replicate data from t
                         },
                         "active_policy_clauses" : ["post"],
                         "events" : ["replication"],
-                        "policy"    : "irods_policy_data_retention",
+                        "policy_to_invoke"    : "irods_policy_data_retention",
                         "configuration" : {
+                            "mode" : "trim_single_replica"
                         }
                     },
                     {
@@ -45,26 +46,19 @@ The configuration of this DTN is designed to synchronously replicate data from t
                         },
                         "active_policy_clauses" : ["pre"],
                         "events" : ["get"],
-                        "policy"    : "irods_policy_data_replication",
+                        "policy_to_invoke"    : "irods_policy_data_replication",
                         "configuration" : {
                             "source_to_destination_map" : {
                                 "AnotherResc" : ["demoResc"]
                             }
                         }
                     }
-                    ]
-                }
+                ]
+            }
         },
         {
             "instance_name": "irods_rule_engine_plugin-policy_engine-data_replication-instance",
             "plugin_name": "irods_rule_engine_plugin-policy_engine-data_replication",
-            "plugin_specific_configuration": {
-                "log_errors" : "true"
-            }
-        },
-        {
-            "instance_name": "irods_rule_engine_plugin-policy_engine-data_retention-instance",
-            "plugin_name": "irods_rule_engine_plugin-policy_engine-data_retention",
             "plugin_specific_configuration": {
                 "log_errors" : "true"
             }
@@ -86,52 +80,52 @@ The configuration of this DTN is similar to the synchronous example except that 
 ```json
     "rule_engines": [
         {
-            "instance_name": "irods_rule_engine_plugin-event_handler-data_object_modified-instance",
+                "instance_name": "irods_rule_engine_plugin-event_handler-data_object_modified-instance",
                 "plugin_name": "irods_rule_engine_plugin-event_handler-data_object_modified",
-                "plugin_specific_configuration": {
+                'plugin_specific_configuration': {
                     "policies_to_invoke" : [
-                    {
-                        "conditional" : {
-                            "logical_path" : "\/tempZone.*"
+                        {
+                            "conditional" : {
+                                "logical_path" : "\/tempZone.*"
+                            },
+                            "active_policy_clauses" : ["post"],
+                            "events" : ["put", "get"],
+                            "policy_to_invoke"    : "irods_policy_access_time",
+                            "configuration" : {
+                                "source_to_destination_map" : {
+                                    "demoResc" : ["AnotherResc"]
+                                }
+                            }
                         },
-                        "active_policy_clauses" : ["post"],
-                        "events" : ["put", "get"],
-                        "policy"    : "irods_policy_access_time",
-                        "configuration" : {
-                            "source_to_destination_map" : {
-                                "demoResc" : ["AnotherResc"]
+                        {
+                            "conditional" : {
+                                "logical_path" : "\/tempZone.*"
+                            },
+                            "active_policy_clauses" : ["post"],
+                            "events" : ["put"],
+                            "policy_to_invoke"    : "irods_policy_data_replication",
+                            "configuration" : {
+                                "source_to_destination_map" : {
+                                    "demoResc" : ["AnotherResc"]
+                                }
+                            }
+                        },
+                        {
+                            "conditional" : {
+                                "logical_path" : "\/tempZone.*"
+                            },
+                            "active_policy_clauses" : ["pre"],
+                            "events" : ["get"],
+                            "policy_to_invoke"    : "irods_policy_data_replication",
+                            "configuration" : {
+                                "source_to_destination_map" : {
+                                    "AnotherResc" : ["demoResc"]
+                                }
                             }
                         }
-                    },
-                    {
-                        "conditional" : {
-                            "logical_path" : "\/tempZone.*"
-                        },
-                        "active_policy_clauses" : ["post"],
-                        "events" : ["put"],
-                        "policy"    : "irods_policy_data_replication",
-                        "configuration" : {
-                            "source_to_destination_map" : {
-                                "demoResc" : ["AnotherResc"]
-                            }
-                        }
-                    },
-                    {
-                        "conditional" : {
-                            "logical_path" : "\/tempZone.*"
-                        },
-                        "active_policy_clauses" : ["pre"],
-                        "events" : ["get"],
-                        "policy"    : "irods_policy_data_replication",
-                        "configuration" : {
-                            "source_to_destination_map" : {
-                                "AnotherResc" : ["demoResc"]
-                            }
-                        }
-                    }
                     ]
                 }
-        },
+            },
             {
                 "instance_name": "irods_rule_engine_plugin-policy_engine-data_replication-instance",
                 "plugin_name": "irods_rule_engine_plugin-policy_engine-data_replication",
