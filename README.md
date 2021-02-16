@@ -13,7 +13,7 @@ The configuration of this DTN is designed to synchronously replicate data from t
         {
             "instance_name": "irods_rule_engine_plugin-event_handler-data_object_modified-instance",
             "plugin_name": "irods_rule_engine_plugin-event_handler-data_object_modified",
-            'plugin_specific_configuration': {
+            "plugin_specific_configuration" : {
                 "policies_to_invoke" : [
                     {
                         "conditional" : {
@@ -82,7 +82,7 @@ The configuration of this DTN is similar to the synchronous example except that 
         {
                 "instance_name": "irods_rule_engine_plugin-event_handler-data_object_modified-instance",
                 "plugin_name": "irods_rule_engine_plugin-event_handler-data_object_modified",
-                'plugin_specific_configuration': {
+                "plugin_specific_configuration": {
                     "policies_to_invoke" : [
                         {
                             "conditional" : {
@@ -158,9 +158,8 @@ This policy composed delayed execution rule is configured to execute a data rete
 {
         "policy" : "irods_policy_enqueue_rule",
         "delay_conditions" : "<EF>REPEAT FOR EVER</EF>",
-        "payload" : {
-            "policy" : "irods_policy_execute_rule",
-            "payload" : {
+        "policy_to_invoke" : "irods_policy_execute_rule",
+            "payarameters" : {
                 "policy_to_invoke" : "irods_policy_query_processor",
                 "lifetime" : "600",
                 "parameters" : {
