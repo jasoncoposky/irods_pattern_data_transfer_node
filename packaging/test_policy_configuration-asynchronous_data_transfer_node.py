@@ -137,11 +137,11 @@ def wait_for_empty_queue(function):
 
 retention_rule = """
 {
-        "policy" : "irods_policy_enqueue_rule",
-        "delay_conditions" : "<PLUSET>1s</PLUSET>",
-        "payload" : {
-            "policy" : "irods_policy_execute_rule",
-            "payload" : {
+        "policy_to_invoke" : "irods_policy_enqueue_rule",
+        "parameters" : {
+            "delay_conditions" : "<PLUSET>1s</PLUSET>",
+            "policy_to_invoke" : "irods_policy_execute_rule",
+            "parameters" : {
                 "policy_to_invoke" : "irods_policy_query_processor",
                 "lifetime" : "2",
                 "parameters" : {
