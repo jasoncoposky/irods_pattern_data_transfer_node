@@ -92,9 +92,6 @@ The configuration of this DTN is similar to the synchronous example except that 
                             "events" : ["put", "get"],
                             "policy_to_invoke"    : "irods_policy_access_time",
                             "configuration" : {
-                                "source_to_destination_map" : {
-                                    "demoResc" : ["AnotherResc"]
-                                }
                             }
                         },
                         {
@@ -164,7 +161,7 @@ This policy composed delayed execution rule is configured to execute a data rete
             "policy_to_invoke" : "irods_policy_query_processor",
             "parameters" : {
                 "lifetime" : "600",
-                "query_string" : "SELECT USER_NAME, COLL_NAME, DATA_NAME, RESC_NAME WHERE COLL_NAME like '/tempZone/home/rods%' AND META_DATA_ATTR_NAME = 'irods::access_time' AND META_DATA_ATTR_VALUE < 'IRODS_TOKEN_LIFETIME' and RESC_NAME = 'demoResc'",
+                "query_string" : "SELECT USER_NAME, COLL_NAME, DATA_NAME, RESC_NAME WHERE COLL_NAME like '/tempZone/home/rods%' AND META_DATA_ATTR_NAME = 'irods::access_time' AND META_DATA_ATTR_VALUE < 'IRODS_TOKEN_LIFETIME_END_TOKEN' and RESC_NAME = 'demoResc'",
                 "query_limit" : 0,
                 "query_type" : "general",
                 "number_of_threads" : 1,
